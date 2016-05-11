@@ -1,0 +1,35 @@
+
+ apply plugin: 'java'
+ apply plugin: 'jetty'
+  apply plugin: 'eclipse'
+ apply plugin: 'idea'
+ 
+ group = 'com.datasheet'
+ 
+ version = '1.0'
+
+ repositories {
+	 mavenCentral()
+ }
+
+
+ dependencies {
+		compile 'org.springframework:spring-context:4.0.5.RELEASE'
+		compile 'org.springframework:spring-context-support:4.0.5.RELEASE'
+		compile 'org.springframework.boot:spring-boot-starter-web:1.1.1.RELEASE'
+		compile 'org.springframework:spring-webmvc:4.0.5.RELEASE'
+		compile 'org.springframework.data:spring-data-mongodb:1.4.2.RELEASE'
+
+		testCompile 'junit:junit:4.11'
+		testCompile 'org.springframework:spring-test:4.0.5.RELEASE'
+ }
+
+ test {
+	 testLogging {
+		 events 'started', 'passed'
+	 }
+ }
+ 
+ properties {
+ 	httpPort=7777
+ }

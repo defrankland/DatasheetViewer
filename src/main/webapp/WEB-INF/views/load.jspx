@@ -1,0 +1,51 @@
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+<spring:message code="main.title" var="title" />
+<spring:message code="search.subtitle" var="subtitle" />
+<spring:message code="search.name" var="name" />
+<spring:message code="search.type" var="type" />
+<spring:message code="search.location" var="location" />
+<head>
+<title>${title}</title>
+</head>
+<body style="font-family: verdana;">
+	<h2>${subtitle}</h2>
+	<form name="addDatasheet" method="post" action="${pageContext.request.contextPath}/dsview/load" commandName="update" id="update">
+		<br><label for="dsName">Name:</label></br>
+		<input type="text" name="dsName"></input>
+		<br><label for="dsLink">Location:</label></br>
+		<input type="text" name="dsLink"></input>
+		<br><label for="dsDescription">Description:</label></br>
+		<input type="text" name="dsDescription"></input>
+		<br><input type="submit" name="add" value="Add"></input></br>
+		<input type="submit" name="remove" value="Remove"></input>
+	</form>
+	<c:if test="${not empty datasheet}">
+		<table>
+			<tbody>
+				<c:forEach items="${datasheet}" var="ds" varStatus="status">
+					<tr>
+						<td>
+							<table>
+								<tbody>
+									<tr>
+										<td align="right">${name}</td>
+										<td>${ds.name}</td>
+									</tr>
+									<tr>
+										<td align="right">${location}</td>
+										<td><a href="${ds.location}" target="_blank">${ds.location}</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
+</body>
+</html>
