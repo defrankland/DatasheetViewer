@@ -9,10 +9,71 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.4.xsd">
 
-	<context:component-scan base-package="com.apress.isf.spring" />
+	<context:component-scan base-package="com.datasheet.*" />
+
+    <bean id="datasheetDAO" class="com.datasheet.data.DatasheetRepository">
+  </bean>
   
+  <bean id="userDAO" class="com.datasheet.data.UserRepository">
+  </bean>
+  
+  <bean id="datasheetSvc" class="com.datasheet.service.DatasheetServiceFacade">
+  </bean>
+  
+  <bean id="userSvc" class="com.datasheet.service.UserServiceFacade">
+  </bean>
+  
+  <bean id="mongoOps" class="org.springframework.data.mongodb.core.MongoTemplate">
+  	<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+  </bean>
+
   <!-- MongoDB -->
   <mongo:mongo id="mongo" host="127.0.0.1" port="27017" />
   <mongo:db-factory id="mongoDbFactory" dbname="dsdb" />
 
+  <jdbc:embedded-database id="userDb">
+    <jdbc:script location="classpath:/META-INF/data/schema.sql" />
+    <jdbc:script location="classpath:/META-INF/data/data.sql" />
+  </jdbc:embedded-database>
+  
+  <bean id="userDbSqlQuery" class="java.util.HashMap">
+    <constructor-arg>
+      <map>
+        <entry key="query">
+          <value>
+            select u.userId, u.email, u.password, u.username as name from users u
+          </value>
+        </entry>
+        <entry key="find">
+          <value>
+            select u.userId, u.email, u.password, u.username as name
+            from users u where u.username = ?
+          </value>
+        </entry>
+        <entry key="insert">
+          <value>
+            insert into users (userId,email,password,username,enabled)
+            values (?,?,?,?,?)
+          </value>
+        </entry>
+        <entry key="insertRole">
+          <value>
+          	insert into user_roles (username,role) VALUES (?,?)
+          </value>
+        </entry>
+        <entry key="update">
+          <value>
+            update users set userId = ?, email = ?, password = ?, username as name = ?
+            where userId = ?
+          </value>
+        </entry>
+        <entry key="delete">
+          <value>
+            delete from users where userId = ?
+          </value>
+        </entry>
+      </map>
+    </constructor-arg>
+  </bean>
+  
 </beans>

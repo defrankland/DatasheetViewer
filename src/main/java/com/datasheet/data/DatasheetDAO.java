@@ -5,10 +5,10 @@ import com.datasheet.model.Datasheet;
 
 public interface DatasheetDAO {
 
-	public List<Datasheet> getAll();
-	public Datasheet save(Datasheet datasheet);
-	public Datasheet findById(String id);
-	public Datasheet findByName(String name);
-	public void removeByName(String name);
-	public void removeById(String id);
+	public List<Datasheet> getAll(String username);
+	public Datasheet save(Datasheet datasheet, String username);
+	public Datasheet findById(String id, String username);
+	public Datasheet findByName(String name, String username);
+	public void removeByName(String name, String username);
+	public void removeById(String id, String username);
 }

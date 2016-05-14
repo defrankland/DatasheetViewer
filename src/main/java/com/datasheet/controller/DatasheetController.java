@@ -1,17 +1,23 @@
 package com.datasheet.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.datasheet.model.Datasheet;
 import com.datasheet.service.DatasheetService;
 
 
 @Controller
 @RequestMapping("/load")
+@Secured({"ROLE_USER", "ROLE_ADMIN"})
 public class DatasheetController {
 
 	@Autowired
@@ -19,8 +25,12 @@ public class DatasheetController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String getDatasheets(Model model){
-		model.addAttribute("datasheet", datasheetSvc.getAllDatasheets());
-		return "load";
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String username = auth.getName();
+	    
+		model.addAttribute("datasheet", datasheetSvc.getAllDatasheets(username));
+		return "load.jspx";
 	}
 	
 	@RequestMapping(params = "add", method=RequestMethod.POST)
@@ -35,19 +45,38 @@ public class DatasheetController {
 		ds.setLocation(location);
 		ds.setDescription(description);
 		
-		datasheetSvc.saveDatasheet(ds);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String username = auth.getName();
+	    
+		datasheetSvc.saveDatasheet(ds, username);
 		
-		model.addAttribute("datasheet", datasheetSvc.getAllDatasheets());
-		return "load";
+		model.addAttribute("datasheet", datasheetSvc.getAllDatasheets(username));
+		return "load.jspx";
 	}
 	
 	@RequestMapping(params = "remove", method=RequestMethod.POST)
 	public String removeDatasheet(Model model,
 			 					  @RequestParam("dsName") String name){
 
-		datasheetSvc.removeDatasheetByName(name);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String username = auth.getName();
+	    
+		datasheetSvc.removeDatasheetByName(name, username);
 		
-		model.addAttribute("datasheet", datasheetSvc.getAllDatasheets());
-		return "load";
+		model.addAttribute("datasheet", datasheetSvc.getAllDatasheets(username));
+		return "load.jspx";
 	}
+	
+	@RequestMapping(params = "logout", method=RequestMethod.POST)
+	public ModelAndView logout(){
+
+		ModelAndView model = new ModelAndView();
+		
+		model.addObject("msg", "You've been logged out successfully.");
+
+	    model.setViewName("login.jsp");
+
+		return model;
+	}
+	
 }

@@ -13,11 +13,13 @@
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-  <mvc:resources mapping="/load/resources/**" location="/resources/" />
-  <context:component-scan base-package="com.datasheet"/>
+  <mvc:resources mapping="/resources/**" location="/resources/" />
+  <context:component-scan base-package="com.datasheet.*"/>
   <mvc:annotation-driven />
   
-  <import resource="datasheetviewer-context.xml"/>
+    <mvc:interceptors>
+    	<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+    </mvc:interceptors>
   
   <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" 
     p:basenames="WEB-INF/i18n/messages" p:fallbackToSystemLocale="false"/>
@@ -27,17 +29,13 @@
   
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/views/"/>
-    <property name="suffix" value=".jspx"/>
+    <property name="suffix" value=""/>
   </bean>
   
-  <bean id="datasheetDAO" class="com.datasheet.data.DatasheetRepository">
-  </bean>
-  
-  <bean id="datasheetSvc" class="com.datasheet.service.DatasheetServiceFacade">
-  </bean>
-  
-  <bean id="mongoOps" class="org.springframework.data.mongodb.core.MongoTemplate">
-  	<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-  </bean>
+   <!-- Redirect view --> 
+   <bean id="indexRedirect" 
+	   class="org.springframework.web.servlet.view.RedirectView">
+           <property name="url" value="index.jsp" />
+   </bean>
   
 </beans>

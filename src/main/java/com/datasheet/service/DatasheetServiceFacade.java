@@ -14,32 +14,32 @@ public class DatasheetServiceFacade implements DatasheetService {
 	@Autowired
 	DatasheetDAO datasheetDAO;
 	
-	public List<Datasheet> getAllDatasheets(){
-		return datasheetDAO.getAll();
+	public List<Datasheet> getAllDatasheets(String username){
+		return datasheetDAO.getAll(username);
 	}
 	
-	public Datasheet saveDatasheet(Datasheet datasheet) {
-		return datasheetDAO.save(datasheet);
+	public Datasheet saveDatasheet(Datasheet datasheet, String username) {
+		return datasheetDAO.save(datasheet, username);
 	}
 
-	public void removeDatasheetById(String id) {
-		datasheetDAO.removeById(id);
+	public void removeDatasheetById(String id, String username) {
+		datasheetDAO.removeById(id, username);
 	}
 
-	public Datasheet findDatasheetById(String id){
-		return datasheetDAO.findById(id);
+	public Datasheet findDatasheetById(String id, String username){
+		return datasheetDAO.findById(id, username);
 	}
 	
-	public boolean updateLocationFromDatasheetId(String datasheetId, String location) {
-		Datasheet datasheet = datasheetDAO.findById(datasheetId);
+	public boolean updateLocationFromDatasheetId(String datasheetId, String location, String username) {
+		Datasheet datasheet = datasheetDAO.findById(datasheetId, username);
 		if(null == datasheet)
 			return false;
 		datasheet.setLocation(location);
-		saveDatasheet(datasheet);		
+		saveDatasheet(datasheet, username);		
 		return true;
 	}
 
-	public void removeDatasheetByName(String name) {
-		datasheetDAO.removeByName(name);	
+	public void removeDatasheetByName(String name, String username) {
+		datasheetDAO.removeByName(name, username);	
 	}
 }

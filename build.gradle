@@ -19,7 +19,11 @@
 		compile 'org.springframework.boot:spring-boot-starter-web:1.1.1.RELEASE'
 		compile 'org.springframework:spring-webmvc:4.0.5.RELEASE'
 		compile 'org.springframework.data:spring-data-mongodb:1.4.2.RELEASE'
-
+		compile 'org.springframework.security:spring-security-web:3.2.3.RELEASE'
+		compile 'org.springframework.security:spring-security-config:3.2.3.RELEASE'
+		compile 'org.springframework.security:spring-security-taglibs:3.2.3.RELEASE'
+		runtime 'hsqldb:hsqldb:1.8.0.10'
+		
 		testCompile 'junit:junit:4.11'
 		testCompile 'org.springframework:spring-test:4.0.5.RELEASE'
  }

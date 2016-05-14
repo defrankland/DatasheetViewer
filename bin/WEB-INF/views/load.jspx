@@ -10,10 +10,14 @@
 <spring:message code="search.location" var="location" />
 <head>
 <title>${title}</title>
+<form name="exit" method="post" action="${pageContext.request.contextPath}/login?logout" commandName="exit" id="exit">
+<input type="submit" name="logout" value="Logout"></input>
+<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"></input>
+</form>
 </head>
 <body style="font-family: verdana;">
 	<h2>${subtitle}</h2>
-	<form name="addDatasheet" method="post" action="${pageContext.request.contextPath}/dsview/load" commandName="update" id="update">
+	<form name="addDatasheet" method="post" action="${pageContext.request.contextPath}/load" commandName="update" id="update">
 		<br><label for="dsName">Name:</label></br>
 		<input type="text" name="dsName"></input>
 		<br><label for="dsLink">Location:</label></br>
@@ -22,6 +26,7 @@
 		<input type="text" name="dsDescription"></input>
 		<br><input type="submit" name="add" value="Add"></input></br>
 		<input type="submit" name="remove" value="Remove"></input>
+		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 	</form>
 	<c:if test="${not empty datasheet}">
 		<table>
