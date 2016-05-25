@@ -4,14 +4,12 @@
 package com.datasheet.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 public class User {
 	@Id
 	private String userId;
 	
-	@DBRef
 	private String password;
 	private String name;
 	private String email;

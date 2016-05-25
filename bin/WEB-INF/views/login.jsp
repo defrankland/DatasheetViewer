@@ -76,7 +76,7 @@
 		
 		<h4>New User?</h4>
 		<form name='NewUserForm'
-			action="<c:url value='/registration' />" method='POST'>
+			action="<c:url value='/register' />" method='GET'>
 			<input name="registration" type="submit" value="Sign Up" />
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />

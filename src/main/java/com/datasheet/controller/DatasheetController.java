@@ -67,16 +67,4 @@ public class DatasheetController {
 		return "load.jspx";
 	}
 	
-	@RequestMapping(params = "logout", method=RequestMethod.POST)
-	public ModelAndView logout(){
-
-		ModelAndView model = new ModelAndView();
-		
-		model.addObject("msg", "You've been logged out successfully.");
-
-	    model.setViewName("login.jsp");
-
-		return model;
-	}
-	
 }

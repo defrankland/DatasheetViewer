@@ -20,9 +20,6 @@ public class DatasheetRepository implements DatasheetDAO {
 	private MongoOperations mongoOps;
 	
 	public List<Datasheet> getAll(String username) {
-	 
-		; 
-		
 		return mongoOps.findAll(Datasheet.class, 
 				                mongoOps.getCollection(username).getName());
 	}
